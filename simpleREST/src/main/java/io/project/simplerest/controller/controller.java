@@ -10,5 +10,6 @@ package io.project.simplerest.controller;
  * @author Nida Aulia
  */
 public class controller {
+  
     
 }
