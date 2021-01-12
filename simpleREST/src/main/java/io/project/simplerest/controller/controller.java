@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+
 /**
  *
  * @author Nida Aulia
@@ -24,12 +25,12 @@ import org.json.JSONObject;
 @WebServlet(urlPatterns = "/")
 public class controller extends HttpServlet{
 
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        //Melakukan Testing apakah servlet sudah berjalan
-        
-
+        PrintWriter out = resp.getWriter();
+       
+        resp.setContentType("application/json");
         //mengambil sebuah url dari browser
         String url = req.getRequestURI();
         System.err.println(url);
@@ -39,6 +40,7 @@ public class controller extends HttpServlet{
         System.err.println(urlID);
         
         car Car = carRest.getCar().getCar(urlID);
+          
         
         if(Car != null){
             String json = "{\n";
@@ -54,8 +56,10 @@ public class controller extends HttpServlet{
             json +="  \"fuel Delivery\": "+JSONObject.quote(Car.getFuelDelivery()) + ",\n";
             json +="  \"power\": "+JSONObject.quote(Car.getPower()) + "\n";
             json += "}\n\n";
-            resp.getOutputStream().println(json);
-        }else{
+            out.println(json);
+        }
+            
+        else{
             resp.getOutputStream().println("{}");
         }
         
