@@ -33,7 +33,6 @@ public class controller extends HttpServlet{
         resp.setContentType("application/json");
         //mengambil sebuah url dari browser
         String url = req.getRequestURI();
-        System.err.println(url);
         
         //Mengambil id yang ada setelah /car/
         String urlID = url.substring("/car/".length());
@@ -62,9 +61,51 @@ public class controller extends HttpServlet{
         else{
             resp.getOutputStream().println("{}");
         }
-        
-        
     }
-  
+    
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
+        String urlReq = req.getRequestURI();
+        
+        resp.setContentType("application/json");
+        
+        PrintWriter out = resp.getWriter();
+        
+        if(urlReq.equals("/car/")){
+            addData(req, resp);
+        }else{
+            out.println("{ }");
+        }
+    }
+
+    
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        PrintWriter out = resp.getWriter();
+        
+        String urlReq = req.getRequestURI(); 
+        
+        String[] split = urlReq.split("/car/");
+        
+        carRest.getCar().deleteCar(split[1]);
+    
+    }
+    
+    public void addData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
+        String id = req.getParameter("id");
+        String brand = req.getParameter("brand");
+        String model = req.getParameter("model");
+        String generation = req.getParameter("generation");
+        String startOfProduction = req.getParameter("start Production");
+        String endOfProduction = req.getParameter("end Production");
+        String engine = req.getParameter("engine");
+        String Configuration = req.getParameter("configuration");
+        String engineDisplacement = req.getParameter("engine Displacement");
+        String fuelDelivery = req.getParameter("fuel Delivery");
+        String power = req.getParameter("engine Displacement");
+        
+        carRest.getCar().addCar(new car(id, brand, model, generation, startOfProduction, endOfProduction, engine, Configuration, engineDisplacement, fuelDelivery, power));
+    }
+    
+    
     
 }
