@@ -64,6 +64,7 @@ public class controller extends HttpServlet{
     }
     
     @Override
+    
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
         String urlReq = req.getRequestURI();
         
@@ -72,12 +73,11 @@ public class controller extends HttpServlet{
         PrintWriter out = resp.getWriter();
         
         if(urlReq.equals("/car/")){
-            addData(req, resp);
+            addEditData(req, resp);
         }else{
             out.println("{ }");
         }
     }
-
     
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
@@ -89,8 +89,30 @@ public class controller extends HttpServlet{
         carRest.getCar().deleteCar(split[1]);
     
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String urlReq = req.getRequestURI();
+        
+        resp.setContentType("application/json");
+        
+        String[] split = urlReq.split("/car/");
+        
+        PrintWriter out = resp.getWriter();
+        
+        String brand = req.getParameter("brand");
+        
+        if(split[1]!=null){
+//            editData(req, resp);
+            out.print("OK");
+            out.print(brand);
+        }else{
+            out.print("{ }");
+        }
+                
+    }
     
-    public void addData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
+    public void addEditData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
         String id = req.getParameter("id");
         String brand = req.getParameter("brand");
         String model = req.getParameter("model");
@@ -103,9 +125,27 @@ public class controller extends HttpServlet{
         String fuelDelivery = req.getParameter("fuel Delivery");
         String power = req.getParameter("engine Displacement");
         
+        
+        
         carRest.getCar().addCar(new car(id, brand, model, generation, startOfProduction, endOfProduction, engine, Configuration, engineDisplacement, fuelDelivery, power));
     }
     
-    
+     public void editData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {        
+         String id = req.getParameter("id");
+        String brand = req.getParameter("brand");
+        String model = req.getParameter("model");
+        String generation = req.getParameter("generation");
+        String startOfProduction = req.getParameter("start Production");
+        String endOfProduction = req.getParameter("end Production");
+        String engine = req.getParameter("engine");
+        String Configuration = req.getParameter("configuration");
+        String engineDisplacement = req.getParameter("engine Displacement");
+        String fuelDelivery = req.getParameter("fuel Delivery");
+        String power = req.getParameter("engine Displacement");
+        
+        System.out.print(brand);
+        
+        carRest.getCar().editCar(new car(id, brand, model, generation, startOfProduction, endOfProduction, engine, Configuration, engineDisplacement, fuelDelivery, power));
+    }
     
 }
