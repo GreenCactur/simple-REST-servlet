@@ -7,7 +7,9 @@ package io.project.simplerest.rest;
 
 import java.util.Map;
 import io.project.simplerest.model.car;
+import java.util.Collection;
 import java.util.HashMap;
+
 
 /**
  *
@@ -27,15 +29,28 @@ public class carRest {
     private carRest(){
        Cars.put("0", new car("0", "Mercedes - Benz", "200", "200 w123", "1976", "1980", "M115", "M115 V-20", "1988", "Carburretor", "98HP"));
        Cars.put("1", new car("1", "Mercedes - Benz", "200D", "200D w123", "1979", "1985", "OM-615", "OM615 D-20", "1988", "Fuel Injection", "60HP"));
+       
     }
     
     public car getCar(String id){
         return Cars.get(id);
     }
     
-    public void putCar(car Car){
+    public car addCar(car Car){
         Cars.put(Car.getId(), Car);
+        System.err.println(Car.getId());
+        return Cars.get(Car.getId());
     }
+    
+    public void deleteCar(String id){
+        Cars.remove(id);
+    }
+    
+    public car editCar(car Car){
+        Cars.put(Car.getId(), Car);
+        return Cars.get(Car.getId());
+    }
+    
     
     //Check apakah Map sudah berhasil menyimpan data dan data dapat diambil
 //    public static void main(String[] args) {
